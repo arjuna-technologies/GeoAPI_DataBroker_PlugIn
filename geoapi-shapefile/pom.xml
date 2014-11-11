@@ -33,8 +33,8 @@
         </dependency>
         <dependency>
             <groupId>org.opengis</groupId>
-            <artifactId>gisapi</artifactId>
-            <version>${version.org.geoapi}</version>
+            <artifactId>geoapi</artifactId>
+            <version>${version.org.opengis}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

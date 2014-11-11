@@ -16,7 +16,7 @@
     <name>GeoAPI DataBroker PlugIn Parent</name>
 
     <properties>
-        <version.org.geoapi>3.0.0</version.org.geoapi>
+        <version.org.opengis>3.0.0</version.org.opengis>
 
         <version.com.arjuna.databroker>1.0.0p1m2l</version.com.arjuna.databroker>
 
