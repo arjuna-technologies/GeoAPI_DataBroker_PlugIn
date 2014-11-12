@@ -2,33 +2,22 @@
  * Copyright (c) 2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.dbplugins.geotools.dataflownodes;
+package com.arjuna.dbplugins.geoapi.dataflownodes;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.geotools.data.FileDataStore;
-import org.geotools.data.FileDataStoreFinder;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.data.simple.SimpleFeatureSource;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.geometry.primitive.Point;
-
 import com.arjuna.databroker.data.DataConsumer;
+import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataProcessor;
-import com.arjuna.dbplugins.geotools.connectors.SimpleDataConsumer;
-import com.arjuna.dbplugins.geotools.connectors.SimpleDataProvider;
+import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
+import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 
 public class ShapeFileConverterDataProcessor implements DataProcessor
 {
@@ -40,9 +29,6 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
 
         _name       = name;
         _properties = properties;
-
-        _dataConsumer = new SimpleDataConsumer<File>(this, MethodUtil.getMethod(ShapeFileConverterDataProcessor.class, "convert", File.class));
-        _dataProvider = new SimpleDataProvider<String>(this);
     }
 
     @Override
@@ -52,9 +38,33 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
     }
 
     @Override
+    public void setName(String name)
+    {
+        _name = name;
+    }
+
+    @Override
     public Map<String, String> getProperties()
     {
         return Collections.unmodifiableMap(_properties);
+    }
+
+    @Override
+    public void setProperties(Map<String, String> properties)
+    {
+        _properties = properties;
+    }
+
+    @Override
+    public DataFlow getDataFlow()
+    {
+        return _dataFlow;
+    }
+
+    @Override
+    public void setDataFlow(DataFlow dataFlow)
+    {
+    	_dataFlow = dataFlow;
     }
 
     public void convert(File shapefileFile)
@@ -63,38 +73,18 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
 
         try
         {
-            FileDataStore           fileDataStore     = FileDataStoreFinder.getDataStore(shapefileFile);
-            SimpleFeatureSource     featureSource     = fileDataStore.getFeatureSource();
-            SimpleFeatureCollection featureCollection = featureSource.getFeatures();
-            SimpleFeatureIterator   featureIterator   = featureCollection.features();
-            SimpleFeatureType       schema            = featureCollection.getSchema();
+            // TODO: Placeholder for required logic
 
-            List<AttributeDescriptor> attributeDescriptors = schema.getAttributeDescriptors();
-            while (featureIterator.hasNext())
-            {
-                SimpleFeature feature = featureIterator.next();
+        	String line = null;
 
-                boolean      firstAttribute = true;
-                StringBuffer line           = new StringBuffer();
-                for (AttributeDescriptor attributeDescriptor: attributeDescriptors)
-                {
-                	if (firstAttribute)
-                		firstAttribute = false;
-                	else
-                		line.append(",");
+        	if (logger.isLoggable(Level.FINE))
+                logger.log(Level.FINE, "line = [" + line + "]");
 
-                	line.append(feature.getAttribute(attributeDescriptor.getName()));
-                }
-
-                if (logger.isLoggable(Level.FINE))
-            	    logger.log(Level.FINE, "line = [" + line + "]");
-
-                _dataProvider.produce(line.toString());
-            }
+            _dataProvider.produce(line);
         }
         catch (Throwable throwable)
         {
-        	logger.log(Level.WARNING, "Problem during conversion of shapefile", throwable);
+            logger.log(Level.WARNING, "Problem during conversion of shapefile", throwable);
         }
     }
 
@@ -140,6 +130,9 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
 
     private String               _name;
     private Map<String, String>  _properties;
+    private DataFlow             _dataFlow;
+    @DataConsumerInjection(methodName="convert")
     private DataConsumer<File>   _dataConsumer;
+    @DataProviderInjection
     private DataProvider<String> _dataProvider;
 }

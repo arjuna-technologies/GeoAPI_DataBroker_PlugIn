@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.dbplugins.geotools.dataflownodes;
+package com.arjuna.dbplugins.geoapi.dataflownodes;
 
 import java.lang.reflect.Method;
 import java.util.logging.Level;

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.LinkedList;
+
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataProcessor;
@@ -17,7 +18,7 @@ import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
-import com.arjuna.dbplugins.geotools.dataflownodes.ShapeFileConverterDataProcessor;
+import com.arjuna.dbplugins.geoapi.dataflownodes.ShapeFileConverterDataProcessor;
 
 public class GeoToolsDataFlowNodeFactory implements DataFlowNodeFactory
 {
