@@ -64,7 +64,7 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
     @Override
     public void setDataFlow(DataFlow dataFlow)
     {
-    	_dataFlow = dataFlow;
+        _dataFlow = dataFlow;
     }
 
     public void convert(File shapefileFile)
@@ -75,9 +75,9 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
         {
             // TODO: Placeholder for required logic
 
-        	String line = null;
+            String line = null;
 
-        	if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE))
                 logger.log(Level.FINE, "line = [" + line + "]");
 
             _dataProvider.produce(line);
@@ -94,7 +94,7 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
         Set<Class<?>> dataConsumerDataClasses = new HashSet<Class<?>>();
 
         dataConsumerDataClasses.add(File.class);
-        
+
         return dataConsumerDataClasses;
     }
 
@@ -114,7 +114,7 @@ public class ShapeFileConverterDataProcessor implements DataProcessor
         Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
 
         dataProviderDataClasses.add(String.class);
-        
+
         return dataProviderDataClasses;
     }
 

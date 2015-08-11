@@ -46,7 +46,7 @@ public class GeoToolsDataFlowNodeFactory implements DataFlowNodeFactory
         List<Class<? extends DataFlowNode>> classes = new LinkedList<Class<? extends DataFlowNode>>();
 
         classes.add(DataProcessor.class);
-        
+
         return classes;
     }
 
